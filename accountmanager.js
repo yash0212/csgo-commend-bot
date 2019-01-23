@@ -76,6 +76,17 @@ if (args.indexOf("--available") > -1) {
 
     console.log("Successfully cleaned the account list");
   });
+} else if (args.indexOf("--delete-guard-enabled") > -1) {
+  //Remove accounts with missing username or password
+  accounts = accounts.filter(x => x["requiresSteamGuard"] == false);
+
+  fs.writeFile("./accounts.json", JSON.stringify(accounts, null, 4), err => {
+    if (err) {
+      throw err;
+    }
+
+    console.log("Successfully removed the accounts with guard enabled");
+  });
 } else {
   console.log(
     "Unknown arguement : " + args[0] + "\nPlease check documentation for help"
